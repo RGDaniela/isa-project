@@ -11,7 +11,7 @@ import Privacy from "../pages/Privacy"
 
 function AppRoutes() {
   return (
-    <BrowserRouter basename="/isa-project">
+    <BrowserRouter>   {/* ← SIN basename */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
