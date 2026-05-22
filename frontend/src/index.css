@@ -1,0 +1,33 @@
+:root {
+  --primary: #4f46e5;
+  --secondary: #7c3aed;
+  --accent: #e94560;
+
+  --bg: #f3f3f3;
+  --card: #1e293b;
+  --text: #f8fafc;
+
+  --border: #334155;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+

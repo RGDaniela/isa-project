@@ -1,0 +1,68 @@
+.users-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem;
+  color: #e5e7eb;
+  font-family: Arial, sans-serif;
+}
+
+/* título */
+.users-container h1 {
+  color: #e94560;
+  margin-bottom: 1.5rem;
+}
+
+/* lista de usuarios */
+.user-card {
+  background: #16213e;
+  border: 1px solid #1f2a48;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  color: #e5e7eb; /* 🔥 evita texto invisible */
+  transition: 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* texto interno */
+.user-card p {
+  margin: 0.3rem 0;
+  color: #cbd5e1; /* gris claro visible */
+}
+
+/* labels fuertes */
+.user-card p strong {
+  color: #ffffff;
+}
+
+/* contenedor vacío */
+.empty-state {
+  color: #94a3b8;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* botones si luego los agregas CRUD */
+.user-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.user-actions button {
+  background: #e94560;
+  border: none;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.user-actions button:hover {
+  background: #ff6b8b;
+}

@@ -1,0 +1,193 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 2rem;
+
+  background: linear-gradient(135deg, #0f172a, #1e1b4b);
+
+  color: white;
+
+  flex-wrap: wrap;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.dev-badge {
+  background: #e94560;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* LOGO */
+
+.logo a {
+  color: #c4b5fd;
+
+  text-decoration: none;
+
+  font-size: 1.7rem;
+  font-weight: bold;
+
+  transition: color 0.3s ease;
+}
+
+.logo a:hover {
+  color: #818cf8;
+}
+
+/* LINKS */
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: white;
+
+  text-decoration: none;
+
+  transition: all 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  font-weight: 500;
+
+  position: relative;
+}
+
+/* Hover */
+
+.nav-links a:hover {
+  color: #a5b4fc;
+}
+
+/* Ruta activa */
+
+.nav-links .active {
+  color: #818cf8;
+  font-weight: bold;
+}
+
+/* Línea animada */
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  width: 0;
+  height: 2px;
+
+  bottom: -4px;
+  left: 0;
+
+  background-color: #818cf8;
+
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links .active::after {
+  width: 100%;
+}
+
+/* ACCESIBILIDAD */
+
+.accessibility-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.accessibility-buttons button {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+
+  border: none;
+
+  color: white;
+
+  padding: 0.4rem 0.8rem;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: bold;
+
+  transition: all 0.3s ease;
+}
+
+.accessibility-buttons button:hover {
+  transform: translateY(-2px);
+
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+/* ALTO CONTRASTE */
+
+body.high-contrast {
+  background: black;
+  color: yellow;
+}
+
+body.high-contrast .navbar {
+  background: black;
+  border-bottom: 2px solid yellow;
+}
+
+body.high-contrast a {
+  color: yellow;
+}
+
+/* RESPONSIVE */
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .accessibility-buttons {
+    display: none;
+  }
+}
