@@ -1,10 +1,11 @@
- import {
+import {
   FaFacebook,
   FaInstagram,
   FaWhatsapp,
   FaLinkedin,
 } from "react-icons/fa";
 
+import { NavLink } from "react-router-dom";
 import "../styles/footer.css";
 
 function Footer() {
@@ -27,10 +28,21 @@ function Footer() {
           <h3>Navegación</h3>
 
           <ul>
-            <li>Inicio</li>
-            <li>Productos</li>
-            <li>Desarrolladores</li>
-            <li>PQR</li>
+            <li>
+              <NavLink to="/">Inicio</NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/plans">Planes</NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/developers">Desarrolladores</NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/pqr">PQR</NavLink>
+            </li>
           </ul>
         </div>
 
@@ -39,21 +51,39 @@ function Footer() {
           <h3>Redes Sociales</h3>
 
           <div className="social-icons">
-            <a href="#">
+
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaInstagram />
             </a>
 
-            <a href="#">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaFacebook />
             </a>
 
-            <a href="#">
+            <a
+              href="https://www.whatsapp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaWhatsapp />
             </a>
 
-            <a href="#">
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaLinkedin />
             </a>
+
           </div>
         </div>
 
@@ -61,8 +91,13 @@ function Footer() {
         <div className="footer-section">
           <h3>Legal</h3>
 
-          <p>Política de privacidad</p>
-          <p>Manejo de datos personales</p>
+          <p>
+            <NavLink to="/about">Política de privacidad</NavLink>
+          </p>
+
+          <p>
+            <NavLink to="/about">Manejo de datos personales</NavLink>
+          </p>
         </div>
       </div>
 

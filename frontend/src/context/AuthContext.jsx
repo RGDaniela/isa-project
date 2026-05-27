@@ -4,15 +4,25 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-  // LOGIN
   const login = (userData) => {
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+
     setUser(userData);
   };
 
-  // LOGOUT
   const logout = () => {
+
+    localStorage.removeItem("user");
+
     setUser(null);
   };
 

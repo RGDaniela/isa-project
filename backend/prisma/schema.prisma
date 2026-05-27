@@ -16,6 +16,7 @@ model User {
   role      String   @default("user")
   createdAt DateTime @default(now())
   developerProfile DeveloperProfile?
+  pqr PQR[]
 }
 
 model Product {
@@ -23,7 +24,6 @@ model Product {
   name        String
   description String
   price       Float
-  stock       Int
   imageUrl    String?
   category    String
   isActive    Boolean  @default(true)
@@ -42,4 +42,29 @@ model DeveloperProfile {
 
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id])
+}
+
+model PQR {
+  id          Int      @id @default(autoincrement())
+
+  asunto      String
+  mensaje     String
+
+  estado      EstadoPQR @default(PENDIENTE)
+
+  respuesta   String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // relación con usuario
+  usuarioId   Int
+  usuario     User @relation(fields: [usuarioId], references: [id])
+}
+
+enum EstadoPQR {
+  PENDIENTE
+  EN_PROCESO
+  RESPONDIDO
+  RESUELTO
 }

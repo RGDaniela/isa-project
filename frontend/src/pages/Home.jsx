@@ -1,52 +1,51 @@
-// src/pages/Home.jsx
-import { useState } from "react";
+// Home.jsx
 import Slider from "../components/Slider";
-import UserForm from "../components/UserForm";
-import UsersTable from "../components/UsersTable";
-
 import "../styles/home.css";
 
 function Home() {
-  const [usuarios, setUsuarios] = useState([
-    {
-      id: 1,
-      nombre: "Dayanne Daniela Rodriguez Gonzalez",
-      correo: "daniela@gmail.com",
-    },
-    {
-      id: 2,
-      nombre: "Dylan Vargas Mendieta",
-      correo: "dylan@gmail.com",
-    },
-  ]);
-
-  const agregarUsuario = (nuevoUsuario) => {
-    setUsuarios([
-      ...usuarios,
-      {
-        id: usuarios.length + 1,
-        ...nuevoUsuario,
-      },
-    ]);
-  };
-
   return (
     <div className="container">
+
       <Slider />
 
       <section className="hero-section">
-        <h1>Bienvenida al ISA Project 🚀</h1>
+        <h1>Bienvenida a ISA Project 🚀</h1>
 
         <p>
-          Innovación tecnológica enfocada en soluciones
-          modernas, accesibles y eficientes.
+          Plataforma desarrollada por VR Talent para optimizar
+          procesos de selección mediante entrevistas automatizadas,
+          gestión de candidatos y herramientas digitales innovadoras.
         </p>
       </section>
 
+      <section className="features-section">
 
-      <UserForm onAddUser={agregarUsuario} />
+        <div className="feature-card">
+          <h2>🎯 Entrevistas Automatizadas</h2>
+          <p>
+            Diseña y configura entrevistas personalizadas para
+            diferentes perfiles profesionales.
+          </p>
+        </div>
 
-      <UsersTable usuarios={usuarios} />
+        <div className="feature-card">
+          <h2>📊 Evaluación Inteligente</h2>
+          <p>
+            Centraliza resultados y obtén información clara para
+            apoyar la toma de decisiones.
+          </p>
+        </div>
+
+        <div className="feature-card">
+          <h2>⚡ Gestión Eficiente</h2>
+          <p>
+            Reduce tiempos operativos y mejora la experiencia
+            tanto para reclutadores como para candidatos.
+          </p>
+        </div>
+
+      </section>
+
     </div>
   );
 }

@@ -2,6 +2,54 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        error: "Todos los campos son obligatorios"
+      });
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    });
+
+    if (existingUser) {
+      return res.status(400).json({
+        error: "El correo ya está registrado"
+      });
+    }
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+        role: "user"
+      }
+    });
+
+    return res.status(201).json({
+      message: "Usuario creado correctamente",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      error: error.message
+    });
+  }
+};
+
 export const login = async (req, res) => {
 
   try {

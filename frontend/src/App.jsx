@@ -6,10 +6,11 @@ import { isDeveloper } from "./utils/permissions";
 import MainLayout from "./layouts/MainLayout";
 
 import Home from "./pages/Home";
-import Products from "./pages/Products";
-import Cart from "./pages/Cart";
+import Plans from "./pages/Plans";
+import Suscription from "./pages/Suscription";
 import Developers from "./pages/Developers";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import About from "./pages/About";
 import PQR from "./pages/PQR";
@@ -25,8 +26,8 @@ function App() {
       <Route element={<MainLayout />}>
 
         <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/plans" element={<Plans />} />
+        <Route path="/suscription" element={<Suscription />} />
         <Route path="/developers" element={<Developers />} />
         <Route path="/about" element={<About />} />
         <Route path="/pqr" element={<PQR />} />
@@ -55,8 +56,10 @@ function App() {
       </Route>
 
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
 
 export default App;
+

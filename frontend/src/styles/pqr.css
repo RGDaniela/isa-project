@@ -1,0 +1,157 @@
+/* CONTENEDOR */
+
+.pqr-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+    color: #111827; /* texto oscuro global */
+}
+
+/* FORMULARIO */
+
+.pqr-form {
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    color: #111827;
+}
+
+.pqr-field {
+    margin-bottom: 15px;
+}
+
+.pqr-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #111827;
+}
+
+.pqr-select,
+.pqr-textarea,
+.pqr-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #111827; /* IMPORTANTE */
+    font-size: 15px;
+}
+
+.pqr-select option {
+    color: #111827;
+    background: white;
+}
+
+.pqr-button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pqr-button:hover {
+    opacity: 0.9;
+}
+
+/* ERRORES */
+
+.pqr-error {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.pqr-input-error {
+    border-color: #dc2626 !important;
+}
+
+/* HISTORIAL */
+
+.pqr-historial {
+    margin-top: 30px;
+}
+
+.pqr-historial h2 {
+    color: #111827;
+}
+
+/* TARJETA PQR */
+
+.pqr-card {
+    background: white;
+    color: #111827; /* MUY IMPORTANTE */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pqr-card h3,
+.pqr-card p,
+.pqr-card span,
+.pqr-card strong {
+    color: #111827;
+}
+
+/* ESTADOS */
+
+.estado-pendiente {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.estado-proceso {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.estado-respondido {
+    color: #7c3aed;
+    font-weight: bold;
+}
+
+.estado-resuelto {
+    color: #16a34a;
+    font-weight: bold;
+}
+
+/* RESPUESTA DEL DEVELOPER */
+
+.pqr-respuesta {
+    background: #eef2ff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    color: #111827;
+}
+
+.pqr-respuesta strong,
+.pqr-respuesta p {
+    color: #111827;
+}
+
+.pqr-admin-panel {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #d1d5db;
+}
+
+.pqr-admin-panel textarea {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.pqr-admin-panel select {
+  margin-bottom: 10px;
+}
+
+.pqr-admin-panel button {
+  width: 100%;
+}

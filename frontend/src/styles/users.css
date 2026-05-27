@@ -66,3 +66,14 @@
 .user-actions button:hover {
   background: #ff6b8b;
 }
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 250px;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+}

@@ -1,43 +1,50 @@
 // src/components/Slider.jsx
 
-
-
 import { useState, useEffect } from "react";
+
+import slide1 from "../assets/slide1.png";
+import slide2 from "../assets/slide2.png";
+import slide3 from "../assets/slide3.png";
+import slide4 from "../assets/slide4.png";
+import slide5 from "../assets/slide5.png";
+
+
 
 function Slider() {
   const [slideActual, setSlideActual] = useState(0);
 
-  const slides = [
+    const slides = [
     {
       id: 1,
-      imagen: "https://picsum.photos/id/20/800/400",
-      titulo: "Bienvenidos a ISA Project",
-      descripcion: "Innovación y calidad en tecnología",
+      imagen: slide1,
+      titulo: "Bienvenidos a VyR Talent",
+      descripcion: "En VR Talent utilizamos soluciones tecnológicas innovadoras para optimizar procesos, potenciar equipos de trabajo y crear nuevas oportunidades de crecimiento.",
     },
     {
       id: 2,
-      imagen: "https://picsum.photos/id/26/800/400",
-      titulo: "Productos de alta calidad",
-      descripcion: "Los mejores precios del mercado",
+      imagen: slide2,
+      titulo: "Proyecto ISA",
+      descripcion: "En VR Talent desarrollamos soluciones tecnológicas que ayudan a las organizaciones a optimizar procesos, aumentar su productividad y adaptarse a los retos del entorno digital.",
     },
     {
       id: 3,
-      imagen: "https://picsum.photos/id/30/800/400",
-      titulo: "Ofertas especiales",
-      descripcion: "Hasta 50% de descuento",
+      imagen: slide3,
+      titulo: "Innovación que impulsa resultados",
+      descripcion: "ISA Project permite diseñar, gestionar y automatizar procesos de selección mediante entrevistas digitales, optimizando la evaluación de candidatos y mejorando la eficiencia del reclutamiento.",
     },
     {
       id: 4,
-      imagen: "https://picsum.photos/id/42/800/400",
-      titulo: "Envíos a todo el país",
-      descripcion: "Entregas rápidas y seguras",
+      imagen: slide4,
+      titulo: "Liderando la transformación digital",
+      descripcion: "Acompañamos a las empresas en la implementación de herramientas tecnológicas que fortalecen la toma de decisiones y mejoran la eficiencia operativa.",
     },
     {
       id: 5,
-      imagen: "https://picsum.photos/id/55/800/400",
-      titulo: "Soporte 24/7",
-      descripcion: "Siempre contigo",
+      imagen: slide5,
+      titulo: "Conectando talento y tecnología",
+      descripcion: "Creemos en el poder de la tecnología para potenciar el talento humano, crear oportunidades de crecimiento y generar valor sostenible para las organizaciones.",
     },
+   
   ];
 
   useEffect(() => {

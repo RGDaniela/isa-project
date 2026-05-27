@@ -1,181 +1,398 @@
-import { useState } from "react"
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+
+
+import "../styles/pqr.css";
 
 function PQR() {
-  const [tipo, setTipo] = useState("peticion")
-  const [nombre, setNombre] = useState("")
-  const [email, setEmail] = useState("")
-  const [mensaje, setMensaje] = useState("")
-  const [errores, setErrores] = useState({})
 
-  const validarFormulario = () => {
-    const nuevosErrores = {}
+  const { user } = useAuth();
 
-    if (!nombre.trim()) {
-      nuevosErrores.nombre = "El nombre es obligatorio"
-    }
+  const [tipo, setTipo] = useState("peticion");
+  const [mensaje, setMensaje] = useState("");
+  const [loading, setLoading] = useState(true);
 
-    if (!email.trim()) {
-      nuevosErrores.email = "El correo es obligatorio"
-    } else {
-      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!regexEmail.test(email)) {
-        nuevosErrores.email = "Correo electrónico inválido"
+  const [errores, setErrores] = useState({});
+  const [pqrs, setPqrs] = useState([]);
+  const [respuestaDev, setRespuestaDev] = useState({});
+  const [estadoDev, setEstadoDev] = useState({});
+  const [guardando, setGuardando] = useState(false);
+
+  useEffect(() => {
+
+    if (!user) return;
+
+    cargarPQR();
+
+  }, [user]);
+
+  const cargarPQR = async () => {
+    try {
+
+      setLoading(true);
+
+      let url = "";
+
+      if (user.role === "developer") {
+        url = "http://localhost:3000/api/pqr";
+      } else {
+        url = `http://localhost:3000/api/pqr/user/${user.id}`;
       }
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      setPqrs(data);
+
+    } catch (error) {
+
+      console.error(error);
+      setPqrs([]);
+
+    } finally {
+
+      setLoading(false);
+
     }
+
+  };
+  const actualizarPQR = async (id) => {
+
+    try {
+
+      setGuardando(true);
+
+      const res = await fetch(
+        `http://localhost:3000/api/pqr/${id}`,
+        {
+          method: "PUT",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            respuesta: respuestaDev[id] || "",
+            estado: estadoDev[id] || "PENDIENTE",
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error);
+        return;
+      }
+
+      alert("PQR actualizado correctamente");
+
+      cargarPQR();
+
+    } catch (error) {
+
+      console.error(error);
+      alert("Error actualizando PQR");
+
+    } finally {
+
+      setGuardando(false);
+
+    }
+
+  };
+  const validarFormulario = () => {
+
+    const nuevosErrores = {};
 
     if (!mensaje.trim()) {
-      nuevosErrores.mensaje = "El mensaje es obligatorio"
+
+      nuevosErrores.mensaje =
+        "El mensaje es obligatorio";
+
     } else if (mensaje.trim().length < 10) {
-      nuevosErrores.mensaje = "El mensaje debe tener al menos 10 caracteres"
+
+      nuevosErrores.mensaje =
+        "El mensaje debe tener mínimo 10 caracteres";
+
     }
 
-    setErrores(nuevosErrores)
-    return Object.keys(nuevosErrores).length === 0
-  }
+    setErrores(nuevosErrores);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+    return Object.keys(nuevosErrores).length === 0;
+  };
 
-    if (validarFormulario()) {
-      alert(`✅ ${tipo.toUpperCase()} enviada con éxito. Nos comunicaremos pronto.`)
-      setNombre("")
-      setEmail("")
-      setMensaje("")
-      setTipo("peticion")
-      setErrores({})
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    if (!user) {
+
+      alert("Debes iniciar sesión");
+      return;
+
     }
-  }
+
+    if (!validarFormulario()) return;
+
+    else if (mensaje.trim().length > 99) {
+      nuevosErrores.mensaje =
+        "El mensaje no puede superar los 99 caracteres";
+    }
+
+    try {
+
+      const res = await fetch(
+        "http://localhost:3000/api/pqr",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            asunto: tipo,
+            mensaje,
+            usuarioId: user.id,
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+
+        alert(data.error);
+        return;
+
+      }
+
+      alert("PQR enviada correctamente");
+
+      setMensaje("");
+      setTipo("peticion");
+
+      cargarPQR();
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Error enviando PQR");
+
+    }
+
+  };
 
   return (
-    <>
-      <div style={styles.container}>
-        <h1>📝 Peticiones, Quejas y Reclamos</h1>
-        <p>Déjanos tu mensaje y te atenderemos lo antes posible</p>
+    <div className="pqr-container">
 
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.field}>
-            <label style={styles.label}>Tipo de solicitud:</label>
+      <h1>📝 PQR</h1>
+
+      {!user && (
+        <p>
+          Debes iniciar sesión para crear solicitudes.
+        </p>
+      )}
+
+      {user && (
+        <form
+          onSubmit={handleSubmit}
+          className="pqr-form"
+        >
+
+          <div className="pqr-field">
+
+            <label className="pqr-label">
+              Tipo
+            </label>
+
             <select
               value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-              style={styles.select}
+              onChange={(e) =>
+                setTipo(e.target.value)
+              }
+              className="pqr-select"
             >
-              <option value="peticion">📄 Petición</option>
-              <option value="queja">⚠️ Queja</option>
-              <option value="reclamo">💰 Reclamo</option>
-              <option value="sugerencia">💡 Sugerencia</option>
+              <option value="peticion">
+                Petición
+              </option>
+
+              <option value="queja">
+                Queja
+              </option>
+
+              <option value="reclamo">
+                Reclamo
+              </option>
+
+              <option value="sugerencia">
+                Sugerencia
+              </option>
             </select>
+
           </div>
 
-          <div style={styles.field}>
-            <label style={styles.label}>Nombre completo:</label>
-            <input
-              type="text"
-              placeholder="Tu nombre"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              style={{ ...styles.input, ...(errores.nombre && styles.inputError) }}
-            />
-            {errores.nombre && <span style={styles.error}>{errores.nombre}</span>}
-          </div>
+          <div className="pqr-field">
 
-          <div style={styles.field}>
-            <label style={styles.label}>Correo electrónico:</label>
-            <input
-              type="email"
-              placeholder="tu@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ ...styles.input, ...(errores.email && styles.inputError) }}
-            />
-            {errores.email && <span style={styles.error}>{errores.email}</span>}
-          </div>
+            <label className="pqr-label">
+              Mensaje
+            </label>
 
-          <div style={styles.field}>
-            <label style={styles.label}>Mensaje:</label>
             <textarea
-              placeholder="Describe tu petición, queja o reclamo..."
-              value={mensaje}
-              onChange={(e) => setMensaje(e.target.value)}
-              style={{ ...styles.textarea, ...(errores.mensaje && styles.inputError) }}
               rows="5"
+              maxLength="99"
+              value={mensaje}
+              onChange={(e) =>
+                setMensaje(e.target.value)
+              }
+              className={`pqr-textarea ${
+                errores.mensaje ? "pqr-input-error" : ""
+              }`}
             />
-            {errores.mensaje && <span style={styles.error}>{errores.mensaje}</span>}
+
+            {errores.mensaje && (
+              <span className="pqr-error">
+                {errores.mensaje}
+              </span>
+            )}
+
           </div>
 
-          <button type="submit" style={styles.button}>
-            Enviar solicitud
+          <button
+            className="pqr-button"
+            onClick={() => actualizarPQR(pqr.id)}
+            disabled={guardando}
+          >
+            {guardando ? "Guardando..." : "Guardar cambios"}
           </button>
+
         </form>
+      )}
+
+      <div className="pqr-historial">
+
+        <h2>
+          {user?.role === "developer"
+            ? "Todos los PQR"
+            : "Mis PQR"}
+        </h2>
+
+        {loading ? (
+
+  <div className="loading-container">
+    <h3>Cargando PQR...</h3>
+  </div>
+
+) : pqrs.length === 0 ? (
+
+  <p>No hay registros.</p>
+
+) : (
+
+  pqrs.map((pqr) => (
+    <div
+      key={pqr.id}
+      className="pqr-card"
+    >
+
+      <h3>{pqr.asunto}</h3>
+
+      <p>
+        <strong>Estado:</strong>{" "}
+        {pqr.estado}
+      </p>
+
+      <p>{pqr.mensaje}</p>
+
+      {pqr.respuesta && (
+        <div className="pqr-respuesta">
+          <strong>Respuesta:</strong>
+          <p>{pqr.respuesta}</p>
+        </div>
+      )}
+
+      {user?.role === "developer" && (
+
+        <div className="pqr-admin-panel">
+
+          {pqr.usuario && (
+            <p>
+              <strong>Usuario:</strong>{" "}
+              {pqr.usuario.name}
+            </p>
+          )}
+
+          <textarea
+            className="pqr-textarea"
+            placeholder="Respuesta del desarrollador"
+            value={
+              respuestaDev[pqr.id] ??
+              pqr.respuesta ??
+              ""
+            }
+            onChange={(e) =>
+              setRespuestaDev({
+                ...respuestaDev,
+                [pqr.id]: e.target.value,
+              })
+            }
+          />
+
+          <select
+            className="pqr-select"
+            value={
+              estadoDev[pqr.id] ??
+              pqr.estado
+            }
+            onChange={(e) =>
+              setEstadoDev({
+                ...estadoDev,
+                [pqr.id]: e.target.value,
+              })
+            }
+          >
+            <option value="PENDIENTE">
+              Pendiente
+            </option>
+
+            <option value="EN_PROCESO">
+              En Proceso
+            </option>
+
+            <option value="RESPONDIDO">
+              Respondido
+            </option>
+
+            <option value="RESUELTO">
+              Resuelto
+            </option>
+          </select>
+
+          <button
+            className="pqr-button"
+            onClick={() => actualizarPQR(pqr.id)}
+            disabled={guardando}
+          >
+            {guardando
+              ? "Guardando..."
+              : "Guardar cambios"}
+          </button>
+
+        </div>
+
+      )}
+
+    </div>
+  ))
+
+)}
+
       </div>
-    </>
-  )
+
+    </div>
+  );
 }
 
-const styles = {
-  container: {
-    maxWidth: "600px",
-    margin: "2rem auto",
-    padding: "0 1rem",
-  },
-  form: {
-    background: "#f5f5f5",
-    padding: "2rem",
-    borderRadius: "10px",
-    marginTop: "1rem",
-  },
-  field: {
-    marginBottom: "1.5rem",
-  },
-  label: {
-    display: "block",
-    marginBottom: "0.5rem",
-    fontWeight: "bold",
-    color: "#333",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    fontSize: "16px",
-  },
-  textarea: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    fontSize: "16px",
-    fontFamily: "inherit",
-  },
-  select: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ddd",
-    borderRadius: "5px",
-    fontSize: "16px",
-  },
-  inputError: {
-    borderColor: "#dc3545",
-    outlineColor: "#dc3545",
-  },
-  error: {
-    color: "#dc3545",
-    fontSize: "12px",
-    marginTop: "5px",
-    display: "block",
-  },
-  button: {
-    background: "#e94560",
-    color: "white",
-    border: "none",
-    padding: "12px 20px",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "16px",
-    width: "100%",
-    fontWeight: "bold",
-  },
-}
-
-export default PQR
+export default PQR;

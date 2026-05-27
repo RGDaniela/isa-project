@@ -132,7 +132,10 @@ tr:hover {
 
   margin-bottom: 0.5rem;
 
-  color: #c4b5fd;
+  color: #b981ec;
+  text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.8),
+    0 0 8px rgba(0, 0, 0, 0.6);
 }
 
 .slide-text p {
@@ -248,4 +251,39 @@ tr:hover {
     justify-content: center;
     flex-wrap: wrap;
   }
+}
+
+.features-section {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 50px auto;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: white;
+  padding: 25px;
+  width: 320px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  transition: transform .3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card h2 {
+  color: #4f46e5;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.hero-section p {
+  color: #000;
 }
